@@ -160,25 +160,3 @@ MongoDbWinForms/
 ├── packages.config
 └── MongoDbWinForms.csproj
 ```
-
-## GitHub'a Yükleme
-
-Projeyi GitHub'a yüklemek için terminalde proje klasöründe aşağıdaki komutları kullanabilirim:
-
-```bash
-git init
-git add .
-git commit -m "MongoDB WinForms customer management application"
-git branch -M main
-git remote add origin https://github.com/KULLANICI_ADIM/MongoDbWinForms.git
-git push -u origin main
-```
-
-`KULLANICI_ADIM` bölümünü kendi GitHub kullanıcı adımla değiştirmem gerekir.
-
-## Notlar
-
-- MongoDB Server çalışmıyorsa uygulama `localhost:27017` adresine bağlanamaz.
-- MongoDB bağlantı adresi `Services/MongoDbConnection.cs` dosyasında bulunur.
-- Proje .NET Framework 4.7.2 hedeflediği için kullanılan NuGet paketlerinin bu framework ile uyumlu olması gerekir.
-- İlk çalıştırmadan önce MongoDB servisinin açık olduğunu kontrol etmem gerekir.
