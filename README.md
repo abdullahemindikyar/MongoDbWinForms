@@ -67,23 +67,13 @@ MongoDB'nin yalnızca `MongoDB.Bson` paketini kullandığımı fark ettim. `Mong
 using MongoDB.Driver;
 ```
 
-### 2. `IMongoCollenction(BsonDocument)` yazım hatası
-
-Collection dönüş tipini yanlış yazmıştım. Doğru kullanım şu şekildedir:
-
-```csharp
-public IMongoCollection<BsonDocument> GetCustomersCollection()
-```
-
-Burada hem `Collection` yazımını düzelttim hem de `BsonDocument` tipini generic olarak kullandım.
-
-### 3. `DnsClientWrapper` TypeInitializationException hatası
+### 2. `DnsClientWrapper` TypeInitializationException hatası
 
 MongoDB istemcisi oluşturulurken `DnsClientWrapper` başlatıcı hatası aldım. Bu hata, MongoDB.Driver'ın ihtiyaç duyduğu `DnsClient.dll` dosyasının uygulama çıktı klasöründe bulunmamasından kaynaklanıyordu.
 
-Çözüm olarak `DnsClient` bağımlılığını ekledim ve .NET Framework 4.7.2 ile uyumlu DLL'in uygulama çıktı klasöründe bulunmasını sağladım.
+Çözüm olarak `DnsClient`'ı ekledim ve .NET Framework 4.7.2 ile uyumlu DLL'in uygulama çıktı klasöründe bulunmasını sağladım.
 
-### 4. `Microsoft.Extensions.Logging.Abstractions` FileNotFoundException hatası
+### 3. `Microsoft.Extensions.Logging.Abstractions` FileNotFoundException hatası
 
 MongoDB.Driver çalışırken aşağıdaki assembly eksikliğiyle karşılaştım:
 
@@ -93,7 +83,7 @@ Microsoft.Extensions.Logging.Abstractions, Version=2.0.0.0
 
 Bu MongoDB.Driver'ın ihtiyaç duyduğu bir bağımlılıktı. Gerekli NuGet paketini ekleyip DLL'in uygulama klasörüne kopyalanmasını sağladım.
 
-### 5. `System.Diagnostics.DiagnosticSource` sürüm uyuşmazlığı
+### 4. `System.Diagnostics.DiagnosticSource` sürüm uyuşmazlığı
 
 Bir aşamada `System.Diagnostics.DiagnosticSource` için sürüm uyuşmazlığı aldım. Uygulama `6.0.0.1` sürümünü isterken elimdeki DLL `6.0.0.0` sürümündeydi.
 
@@ -109,7 +99,7 @@ Bu sorunu `App.config` dosyasına binding redirect ekleyerek çözdüm:
 </dependentAssembly>
 ```
 
-### 6. Windows Forms Designer yükleme hatası
+### 5. Windows Forms Designer yükleme hatası
 
 Modern arayüzü oluşturduktan sonra Windows Forms Designer açılırken `CodeDomDesignerLoader` hatası aldım.
 
@@ -120,13 +110,13 @@ Bunun için:
 - Proje dosyasının geçerli XML formatında olduğundan emin oldum.
 - Gerekirse Visual Studio'yu kapatıp `.vs` klasörünü temizleyerek projeyi tekrar yükledim.
 
-### 7. Projenin Visual Studio'da `unloaded` görünmesi
+### 6. Projenin Visual Studio'da `unloaded` görünmesi
 
 Bir süre Solution Explorer'da proje `unloaded` olarak görünüyordu. Dosyalar diskte durmasına rağmen Visual Studio projeyi yükleyemiyordu.
 
 Proje dosyasını kontrol ettim ve `MongoDbWinForms.csproj` dosyasındaki bozuk XML satırlarını düzelttim. Proje dosyasının XML yapısı düzeldikten sonra çözüm dosyasını tekrar yükleyebildim.
 
-### 8. DataGridView sütunlarının tekrar etmesi
+### 7. DataGridView sütunlarının tekrar etmesi
 
 Müşteri listesinde aynı anda hem elle tanımlanan sütunlar hem de model sınıfından otomatik oluşturulan sütunlar görünüyordu. Bu yüzden `Customer...` şeklinde fazladan sütunlar oluşuyordu.
 
